@@ -4,24 +4,46 @@ var tableData = data;
 // YOUR CODE HERE!
 var tbody = d3.select('tbody');
 
+// Enter initial table with all the data
 tableData.forEach(function(ufoSiting) {
-   console.log(ufoSiting);
    var row = tbody.append("tr");
    Object.entries(ufoSiting).forEach(function([key, value]) {
-     console.log(key, value);
      var cell = row.append("td");
      cell.text(value);
    });
  });
 
-/*
-for (var i = 0; i < tableData.length; i++) {
-    console.log(tableData[i]);
-    var row = tbody.append("tr");
-    for (var j = 0; j < tableData[i].length; j++) {
-        console.log(tableData[i].datetime)
+ var filterButton = d3.select("#filter-btn");
+
+ filterButton.on("click", function() {
+    var filteredDate = d3.select('#datetime').property("value");
+    if(filteredDate !== ''){
+        var filteredData = tableData.filter(tableData => tableData.datetime === filteredDate);
+        tbody.html("");
+        d3.event.preventDefault();
+        console.log(filteredData)
+        filteredData.forEach(function(ufoSiting) {
+        var row = tbody.append("tr");
+        Object.entries(ufoSiting).forEach(function([key, value]) {
+          var cell = row.append("td");
+          cell.text(value);
+        });
+      });
     }
-  }
-*/
+    else {
+        var filteredData = tableData;
+        tbody.html("");
+        d3.event.preventDefault();
+        console.log(filteredData)
+        filteredData.forEach(function(ufoSiting) {
+        var row = tbody.append("tr");
+        Object.entries(ufoSiting).forEach(function([key, value]) {
+          var cell = row.append("td");
+          cell.text(value);
+        });
+    });
+    }
+  });
+
 
 
